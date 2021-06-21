@@ -1,0 +1,71 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+body {
+  font-family: monospace !important;
+}
+
+.topBar {
+  background-color: #282c34;
+  color: white;
+}
+
+.navbar-brand {
+  margin-left: 1em;
+  color: white !important;
+}
+
+.post-form {
+  margin: auto;
+  max-width: 60%;
+}
+
+.nav-btn {
+  margin-left: 1em;
+  color: whitesmoke !important;
+}
+
+.post-field {
+  margin-top: 2em;
+  width: 100%
+}
+
+.title-field {
+  height: 2.5em;
+  font-size: 1.5em;
+  width: 100%
+}
+
+.title-field::placeholder {
+  font-family: monospace;
+  padding-left: 0.5em;
+}
+
+.post-field::placeholder {
+  font-family: monospace;
+  padding: 0.5em;
+}
+
+.App-body {
+  background-color: #282c34;
+  color: white;
+  padding-top: 2em;
+  padding-bottom: 10em;
+}
+
+Alert {
+  width: 90%;
+}
+
+.App-link {
+  color: #61dafb;
+}
