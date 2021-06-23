@@ -2,9 +2,6 @@ import { Component } from "react";
 import Arweave from "arweave";
 import ArDB from "ardb";
 
-const postUrls = [];
-const postIds = [];
-
 const arweave = Arweave.init({
   host: "arweave.net",
   port: 443,
@@ -22,6 +19,11 @@ class PostHistory extends Component {
       posts: [],
     };
   }
+
+  componentDidUpdate() {
+    
+  }
+
 
   componentDidMount() {
     this.setState({ posts: [] });
@@ -43,6 +45,30 @@ class PostHistory extends Component {
     }
   };
 
+
+  loadPosts = () => {
+    let postIds = []
+    let postUrls = []
+
+    for (let post of this.state.posts) {
+      postIds.push({ id: post.node.id, title: this.getTitle(post) });
+    }
+    
+    for (let post of postIds) {
+        postUrls.push(
+          <p>
+            <a
+              target="_blank noreferrer noopener"
+              href={`https://arweave.net/${post.id}`}
+            >
+              {post.title}
+            </a>
+          </p>
+        )
+    }
+    return postUrls
+  }
+
   render() {
     if (this.state.posts.length === 0 ) {
       return false;
@@ -50,28 +76,11 @@ class PostHistory extends Component {
     if (!sessionStorage.getItem("arweaveWallet")) {
         return false;
     }
-    for (let post of this.state.posts) {
-      postIds.push({ id: post.node.id, title: this.getTitle(post) });
-    }
-    let uniqPostIds = [...new Set(postIds)];
-    for (let post of uniqPostIds) {
-      postUrls.push(
-        <p>
-          <a
-            target="_blank noreferrer noopener"
-            href={`https://arweave.net/${post.id}`}
-          >
-            {post.title}
-          </a>
-        </p>
-      );
-    }
-    let uniquePostUrls = [...new Set(postUrls)];
 
     return (
       <div className="post-history mt-4 ml-5">
         <h2 className="pb-3 border-bottom border-secondary">your permaposts</h2>
-        <div className="pt-2">{uniquePostUrls}</div>
+        <div className="pt-2">{this.loadPosts()}</div>
       </div>
     );
   }
