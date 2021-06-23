@@ -20,13 +20,13 @@ class PostForm extends Component {
 
   createPost = (postText, postTitle, postTags) => {
     const wallet = JSON.parse(sessionStorage.getItem("arweaveWallet"));
-    console.log(wallet)
     this.setState({ postPublished: false });
     arweave.createTransaction({ data: postText }, wallet).then((tx) => {
       tx.addTag("Title", postTitle);
       tx.addTag("App-Name", "permablog-v1");
       tx.addTag("Content-Type", "text/html");
       tx.addTag("Post-Tags", postTags);
+      // TODO - more here
       arweave.transactions.sign(tx, wallet).then(() => {
         arweave.transactions.post(tx, wallet).then((response) => {
           if (response.statusText === "OK") {

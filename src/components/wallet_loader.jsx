@@ -35,7 +35,7 @@ export default function WalletLoader() {
       });
       sessionStorage.setItem("arweaveWallet", content);
     } catch (err) {
-      alert("Bad wallet file", alert);
+      alert("Invalid wallet file", alert);
     }
   };
 
@@ -48,7 +48,6 @@ export default function WalletLoader() {
   };
 
   return (
-      
       <Container>
           { sessionStorage.getItem("arweaveWallet") ?
         <Button variant="danger" onClick={handleDisconnect}>

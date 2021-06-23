@@ -20,13 +20,7 @@ class PostHistory extends Component {
     };
   }
 
-  componentDidUpdate() {
-    
-  }
-
-
   componentDidMount() {
-    this.setState({ posts: [] });
     ardb
       .search("transactions")
       .appName('permablog-v1')
@@ -44,7 +38,6 @@ class PostHistory extends Component {
       return title.value;
     }
   };
-
 
   loadPosts = () => {
     let postIds = []

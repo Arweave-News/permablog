@@ -19,4 +19,4 @@ Pre-Alpha prototype for a way to upload, view, manage and blog posts on the perm
 
 ## Bugs
 
-* Posts in the PostHistory component can display duplicates
+* ~~Posts in the PostHistory component can display duplicates~~
