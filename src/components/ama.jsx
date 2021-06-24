@@ -10,7 +10,7 @@ const arweave = Arweave.init({
   logging: false,
 });
 
-class Ama extends Component {
+class PostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,15 +18,13 @@ class Ama extends Component {
     };
   }
 
-  createPost = (postText, postTitle, postTags) => {
+  createPost = (postText, amaId) => {
     const wallet = JSON.parse(sessionStorage.getItem("arweaveWallet"));
     this.setState({ postPublished: false });
     arweave.createTransaction({ data: postText }, wallet).then((tx) => {
-      tx.addTag("Title", postTitle);
+      tx.addTag("Title", amaId);
       tx.addTag("App-Name", "permablog-v1");
       tx.addTag("Content-Type", "text/html");
-      tx.addTag("Post-Tags", postTags);
-      // TODO - more here
       arweave.transactions.sign(tx, wallet).then(() => {
         arweave.transactions.post(tx, wallet).then((response) => {
           if (response.statusText === "OK") {
@@ -42,9 +40,8 @@ class Ama extends Component {
   onFormSubmit = (event) => {
     event.preventDefault();
     const postText = event.target.postText.value;
-    const postTitle = event.target.postTitle.value;
-    const postTags = event.target.postTags.value;
-    this.createPost(postText, postTitle, postTags);
+    const amaId = event.target.amaId.value;
+    this.createPost(postText, amaId);
   };
 
   render() {
@@ -53,24 +50,24 @@ class Ama extends Component {
         <form onSubmit={this.onFormSubmit}>
           <div>
             <input
-              placeholder="post title"
+              placeholder="AMA ID (e.g. @arweaveNews_1615928471657_AMA)"
               className="title-field mt-4"
               type="text"
-              id="title"
-              name="postTitle"
+              id="amaId"
+              name="amaId"
             ></input>
           </div>
           <div>
             <textarea
-              placeholder="post html body"
+              placeholder="question to send"
               className="post-field"
               type="text"
-              rows="10"
+              rows="5"
               id="post"
               name="postText"
             />
           </div>
-          <div>
+          {/*<div>
             <input
                 placeholder="tag, tag2, tag3..."
                 className="post-field mt-2"
@@ -78,15 +75,15 @@ class Ama extends Component {
                 id="tags"
                 name="postTags"
               ></input>
-          </div>
+          </div>*/}
           <div>
             {sessionStorage.getItem("arweaveWallet") ? 
             <Button kind="success" className="btn btn-primary mt-3" type="submit">
-              Post to the permaweb
+              Submit question
             </Button>
             :
             <Button disabled kind="success" className="btn btn-primary mt-3" type="submit">
-              Connect wallet to post
+              Connect wallet to submit
             </Button>
     }
           </div>
@@ -101,4 +98,4 @@ class Ama extends Component {
   }
 }
 
-export default Ama;
+export default PostForm;

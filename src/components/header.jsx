@@ -13,6 +13,7 @@ export default function Header() {
             <Navbar.Toggle />
             <NavLink className="btn navbar-item nav-btn" activeClassName="is-active" to="/posts">Posts</NavLink>
             <NavLink className="btn navbar-item nav-btn" activeClassName="is-active" to="/new">New</NavLink>
+            <NavLink className="btn navbar-item nav-btn" activeClassName="is-active" to="/ama">AMA</NavLink>
             <Navbar.Collapse className="justify-content-end">
                 <Navbar.Text>
                     <WalletLoader/>
