@@ -37,6 +37,8 @@ class PostForm extends Component {
     });
   };
 
+  //invokeContract = () => {}
+
   onFormSubmit = (event) => {
     event.preventDefault();
     const postText = event.target.postText.value;

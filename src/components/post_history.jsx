@@ -1,4 +1,5 @@
 import { Component } from "react";
+import PostItem from "./post_item.jsx"
 import Arweave from "arweave";
 import ArDB from "ardb";
 
@@ -48,16 +49,7 @@ class PostHistory extends Component {
     }
     
     for (let post of postIds) {
-        postUrls.push(
-          <p>
-            <a
-              target="_blank noreferrer noopener"
-              href={`https://arweave.net/${post.id}`}
-            >
-              {post.title}
-            </a>
-          </p>
-        )
+        postUrls.push(<PostItem id={post.id} title={post.title}/>)
     }
     return postUrls
   }
