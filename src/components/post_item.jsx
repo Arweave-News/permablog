@@ -20,7 +20,7 @@ class PostItem extends Component {
                     target="_blank noreferrer noopener"
                     href={`https://arweave.net/${this.props.id}`}
                     >
-                    {this.props.title}
+                    {this.props.title} 
                 </Button>
             </div>
             <div className="justify-content-end">

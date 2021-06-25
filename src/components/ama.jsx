@@ -10,7 +10,9 @@ const arweave = Arweave.init({
   logging: false,
 });
 
-class PostForm extends Component {
+const amaContractId = '92Tq6BKm6pvVkKW8_6Fb13QWTdUzBRLnG9scMBNWYZ4'
+
+class AmaAnswerForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,17 +20,19 @@ class PostForm extends Component {
     };
   }
 
-  createPost = (postText, amaId) => {
+  createAnswer = (amaId, qId, answerText) => {
     const wallet = JSON.parse(sessionStorage.getItem("arweaveWallet"));
-    this.setState({ postPublished: false });
-    arweave.createTransaction({ data: postText }, wallet).then((tx) => {
-      tx.addTag("Title", amaId);
-      tx.addTag("App-Name", "permablog-v1");
+    this.setState({ questionAnswered: false });
+    arweave.createTransaction({ data: amaId }, wallet).then((tx) => {
+      tx.addTag("Contract-Src", amaContractId);
+      tx.addTag("App-Name", "SmartWeaveAction");
+      tx.addTag("App-Version", "0.3.0")
       tx.addTag("Content-Type", "text/html");
+      tx.addTag("input", `{ "function": "answer", "id": ${amaId}, "answer": ${answerText}, "qid": ${qId} }`)
       arweave.transactions.sign(tx, wallet).then(() => {
         arweave.transactions.post(tx, wallet).then((response) => {
           if (response.statusText === "OK") {
-            this.setState({ postPublished: true });
+            this.setState({ questionAnswered: true });
           }
         });
       });
@@ -37,49 +41,50 @@ class PostForm extends Component {
 
   //invokeContract = () => {}
 
-  onFormSubmit = (event) => {
+  onAnswerFormSubmit = (event) => {
     event.preventDefault();
-    const postText = event.target.postText.value;
     const amaId = event.target.amaId.value;
-    this.createPost(postText, amaId);
+    const qId = event.target.qId.value;
+    const answerText = event.target.answerText.value;
+    this.createAnswer(amaId, qId, answerText);
   };
 
   render() {
     return (
+      <div><h2 className="mt-4 mb-2">Answer a question</h2>
       <div class="post-form">
-        <form onSubmit={this.onFormSubmit}>
+        <form onSubmit={this.onAnswerFormSubmit}>
           <div>
             <input
               placeholder="AMA ID (e.g. @arweaveNews_1615928471657_AMA)"
-              className="title-field mt-4"
+              className="id-field mt-2"
               type="text"
               id="amaId"
               name="amaId"
             ></input>
+            <input
+              placeholder="Question ID (e.g. F6wH7q9bMXp9TqB_RbxI3GyerREXO1_twFnlYYAojDA)"
+              className="id-field pl-2 mt-2"
+              type="text"
+              id="qId"
+              name="qId"
+            ></input>
           </div>
           <div>
             <textarea
-              placeholder="question to send"
-              className="post-field"
+              placeholder="Answer to question..."
+              className="question-field"
               type="text"
               rows="5"
-              id="post"
-              name="postText"
+              id="answerText"
+              name="answerText"
             />
           </div>
-          {/*<div>
-            <input
-                placeholder="tag, tag2, tag3..."
-                className="post-field mt-2"
-                type="text"
-                id="tags"
-                name="postTags"
-              ></input>
-          </div>*/}
+          
           <div>
             {sessionStorage.getItem("arweaveWallet") ? 
             <Button kind="success" className="btn btn-primary mt-3" type="submit">
-              Submit question
+              Submit answer
             </Button>
             :
             <Button disabled kind="success" className="btn btn-primary mt-3" type="submit">
@@ -88,14 +93,15 @@ class PostForm extends Component {
     }
           </div>
         </form>
-        {this.state.postPublished ? (
+        {this.state.questionAnswered ? (
           <Alert transition="fade" className="mt-4 show alert alert-success">
-            Post published{" "}
+            Answer submitted{" "}
           </Alert>
         ) : null}
+      </div>
       </div>
     );
   }
 }
 
-export default PostForm;
+export default AmaAnswerForm;

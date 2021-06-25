@@ -39,9 +39,20 @@ body {
   width: 100%
 }
 
+.question-field {
+  margin-top: 1em;
+  width: 100%
+}
+
 .title-field {
   height: 2.5em;
   font-size: 1.5em;
+  width: 100%
+}
+
+.id-field {
+  height: 1.5em;
+  font-size: 1em;
   width: 100%
 }
 
