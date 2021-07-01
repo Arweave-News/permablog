@@ -1,6 +1,9 @@
 import { Component } from "react";
 import Arweave from "arweave";
-import { Alert, Button } from "react-bootstrap";
+import { Button, Card} from "react-bootstrap";
+import { readContract } from 'smartweave'
+import AmaQuestionForm from "./ama_question_form";
+import AmaAnswerForm from "./ama_answer_form"
 
 const arweave = Arweave.init({
   host: "arweave.net",
@@ -10,98 +13,80 @@ const arweave = Arweave.init({
   logging: false,
 });
 
-const amaContractId = '92Tq6BKm6pvVkKW8_6Fb13QWTdUzBRLnG9scMBNWYZ4'
+const amaContractId = 'nyKnauUtvmp93DAHqMJc2b4rycYkGw596IHlc2pO1Sw'
 
-class AmaAnswerForm extends Component {
+class Ama extends Component {
   constructor(props) {
     super(props);
     this.state = {
       posts: [],
+      showAnswerForm: false,
     };
   }
 
-  createAnswer = (amaId, qId, answerText) => {
+  componentDidMount() {
+    this.loadAmas()
+    this.getQuestions()
+  }
+
+  onAnswerClick = async (qId) => {
     const wallet = JSON.parse(sessionStorage.getItem("arweaveWallet"));
-    this.setState({ questionAnswered: false });
-    arweave.createTransaction({ data: amaId }, wallet).then((tx) => {
-      tx.addTag("Contract-Src", amaContractId);
-      tx.addTag("App-Name", "SmartWeaveAction");
-      tx.addTag("App-Version", "0.3.0")
-      tx.addTag("Content-Type", "text/html");
-      tx.addTag("input", `{ "function": "answer", "id": ${amaId}, "answer": ${answerText}, "qid": ${qId} }`)
-      arweave.transactions.sign(tx, wallet).then(() => {
-        arweave.transactions.post(tx, wallet).then((response) => {
-          if (response.statusText === "OK") {
-            this.setState({ questionAnswered: true });
-          }
-        });
-      });
+    await arweave.wallets.jwkToAddress(wallet).then((address) => {
+        sessionStorage.setItem("wallet_address", address);
     });
-  };
+    const walletAddr = sessionStorage.getItem("wallet_address")
+    if (walletAddr === this.props.ama.guestAddress) {
+        this.setState({showAnswerForm: true, questionToAnswer: qId})
+    } else {
+        alert('You are not the guest of this AMA')
+    }
+    console.log('state is:')
+    console.log(this.state)
+  }
 
-  //invokeContract = () => {}
+  getQuestions = () => {
+      let questionsList = []
+      let questions = this.props.ama.questions
+      for (let i in questions) {
+        let q = questions[i]
+        questionsList.push(
+            <div>
+                <span>{q.question}</span>
+                <span className="small text-success">({q['QID']})</span>
+                <span><Button onClick={() => this.onAnswerClick(q['QID'])} variant="link">Answer</Button></span>
+            </div>
+        )
+      }
+      return questionsList
+  }
 
-  onAnswerFormSubmit = (event) => {
-    event.preventDefault();
-    const amaId = event.target.amaId.value;
-    const qId = event.target.qId.value;
-    const answerText = event.target.answerText.value;
-    this.createAnswer(amaId, qId, answerText);
-  };
+  loadAmas = async () => {
+    const amasObj = await readContract(arweave, amaContractId)
+    this.setState({amas: amasObj["ama"]})
+  }
+
+  showQuestionForm = (a) => {
+    this.setState({questionToAsk: a})
+    this.setState({showQuestionForm: true})
+  }
 
   render() {
+      console.log('ama props:')
+      console.log(this.props)
     return (
-      <div><h2 className="mt-4 mb-2">Answer a question</h2>
-      <div class="post-form">
-        <form onSubmit={this.onAnswerFormSubmit}>
-          <div>
-            <input
-              placeholder="AMA ID (e.g. @arweaveNews_1615928471657_AMA)"
-              className="id-field mt-2"
-              type="text"
-              id="amaId"
-              name="amaId"
-            ></input>
-            <input
-              placeholder="Question ID (e.g. F6wH7q9bMXp9TqB_RbxI3GyerREXO1_twFnlYYAojDA)"
-              className="id-field pl-2 mt-2"
-              type="text"
-              id="qId"
-              name="qId"
-            ></input>
-          </div>
-          <div>
-            <textarea
-              placeholder="Answer to question..."
-              className="question-field"
-              type="text"
-              rows="5"
-              id="answerText"
-              name="answerText"
-            />
-          </div>
-          
-          <div>
-            {sessionStorage.getItem("arweaveWallet") ? 
-            <Button kind="success" className="btn btn-primary mt-3" type="submit">
-              Submit answer
-            </Button>
-            :
-            <Button disabled kind="success" className="btn btn-primary mt-3" type="submit">
-              Connect wallet to submit
-            </Button>
-    }
-          </div>
-        </form>
-        {this.state.questionAnswered ? (
-          <Alert transition="fade" className="mt-4 show alert alert-success">
-            Answer submitted{" "}
-          </Alert>
-        ) : null}
-      </div>
+      <div>
+        {this.state.showQuestionForm ? <AmaQuestionForm question={this.state.questionToAsk}/> : null }
+        {this.state.showAnswerForm ? <AmaAnswerForm ama={this.props.ama} question={this.state.questionToAnswer}/> : null }
+        <Card border="dark" className="mx-auto mb-2" style={{'width': '60rem'}}>
+          <Card.Header as="h5">Questions for {this.props.ama.guest} <span className="small">(AMA id: {this.props.ama.id})</span></Card.Header>
+          <Card.Body>
+            <Card.Body>{this.getQuestions()}</Card.Body>
+            <Button onClick={() => this.showQuestionForm(this.props.ama)} variant="primary">Ask a question</Button>
+          </Card.Body>
+        </Card>
       </div>
     );
   }
 }
 
-export default AmaAnswerForm;
+export default Ama;

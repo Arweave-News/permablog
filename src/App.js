@@ -2,7 +2,7 @@ import './App.css';
 import PostHistory from './components/post_history';
 import PostForm from "./components/post_form.jsx"
 import Header from './components/header.jsx'
-import Ama from './components/ama.jsx'
+import Amas from './components/amas.jsx'
 import { Route, BrowserRouter } from "react-router-dom";
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
             <PostHistory/>
           </Route>
           <Route exact path="/ama">
-            <Ama/>
+            <Amas page="home"/>
           </Route>
         </div>
       </div>
