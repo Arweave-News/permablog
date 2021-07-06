@@ -46,7 +46,7 @@ class AmaAnswerForm extends Component {
   render() {
     console.log(this.props)
       return (
-        <div>
+        <div >
         <h2 className="mt-4 mb-2">Answer a question</h2>
         <div className="post-form">
           <form onSubmit={this.onAnswerFormSubmit}>
@@ -79,13 +79,13 @@ class AmaAnswerForm extends Component {
               />
             </div>
             
-            <div>
+            <div className="mb-5">
               {sessionStorage.getItem("arweaveWallet") ? 
-              <Button kind="success" className="btn btn-primary mt-3" type="submit">
+              <Button variant="outline-primary" className="mt-3" type="submit">
                 Submit answer
               </Button>
               :
-              <Button disabled kind="success" className="btn btn-primary mt-3" type="submit">
+              <Button disabled variant="outline-primary" className="mt-3" type="submit">
                 Connect wallet to submit
               </Button>
       }

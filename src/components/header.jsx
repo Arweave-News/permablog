@@ -11,9 +11,10 @@ export default function Header() {
             <Navbar className="">
             <NavLink className="btn navbar-item text-decoration-none mr-4" to="/"><Navbar.Brand>permablog</Navbar.Brand></NavLink>
             <Navbar.Toggle />
-            <NavLink className="btn navbar-item nav-btn" activeClassName="is-active" to="/posts">Posts</NavLink>
+           {/* <NavLink className="btn navbar-item nav-btn" activeClassName="is-active" to="/posts">Posts</NavLink>
             <NavLink className="btn navbar-item nav-btn" activeClassName="is-active" to="/new">New</NavLink>
             <NavLink className="btn navbar-item nav-btn" activeClassName="is-active" to="/ama">AMA</NavLink>
+            */}
             <Navbar.Collapse className="justify-content-end">
                 <Navbar.Text>
                     <WalletLoader/>

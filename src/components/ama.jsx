@@ -31,22 +31,23 @@ class Ama extends Component {
 
   onAnswerClick = async (qId) => {
     const wallet = JSON.parse(sessionStorage.getItem("arweaveWallet"));
-    await arweave.wallets.jwkToAddress(wallet).then((address) => {
-        sessionStorage.setItem("wallet_address", address);
-    });
-    const walletAddr = sessionStorage.getItem("wallet_address")
-    if (walletAddr === this.props.ama.guestAddress) {
-        this.setState({showAnswerForm: true, questionToAnswer: qId})
-    } else {
-        alert('You are not the guest of this AMA')
+    if (!wallet) { return null } else {
+      await arweave.wallets.jwkToAddress(wallet).then((address) => {
+          sessionStorage.setItem("wallet_address", address);
+      });
+      const walletAddr = sessionStorage.getItem("wallet_address")
+      if (walletAddr === this.props.ama.guestAddress) {
+          this.setState({showAnswerForm: true, questionToAnswer: qId})
+      } else {
+          alert('You are not the guest of this AMA')
+      }
     }
-    console.log('state is:')
-    console.log(this.state)
   }
 
   getQuestions = () => {
       let questionsList = []
       let questions = this.props.ama.questions
+      if (questions.length === 0 ) { questionsList.push(<span>No questions yet!</span>) }
       for (let i in questions) {
         let q = questions[i]
         questionsList.push(
@@ -74,14 +75,14 @@ class Ama extends Component {
       console.log('ama props:')
       console.log(this.props)
     return (
-      <div>
+      <div className="mb-5">
         {this.state.showQuestionForm ? <AmaQuestionForm question={this.state.questionToAsk}/> : null }
         {this.state.showAnswerForm ? <AmaAnswerForm ama={this.props.ama} question={this.state.questionToAnswer}/> : null }
-        <Card border="dark" className="mx-auto mb-2" style={{'width': '60rem'}}>
+        <Card border="dark" className="mx-auto mb-2">
           <Card.Header as="h5">Questions for {this.props.ama.guest} <span className="small">(AMA id: {this.props.ama.id})</span></Card.Header>
           <Card.Body>
             <Card.Body>{this.getQuestions()}</Card.Body>
-            <Button onClick={() => this.showQuestionForm(this.props.ama)} variant="primary">Ask a question</Button>
+            <Button onClick={() => this.showQuestionForm(this.props.ama)} variant="outline-primary">Ask a question</Button>
           </Card.Body>
         </Card>
       </div>

@@ -1,6 +1,6 @@
 import { Component } from "react";
 import Arweave from "arweave";
-import { Button, Card} from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { interactRead, readContract } from 'smartweave'
 import AmaQuestionForm from "./ama_question_form";
 import Ama from "./ama.jsx"
@@ -24,10 +24,12 @@ class Amas extends Component {
   }
 
   componentDidMount() {
+    //window.location.reload()
     this.loadAmas()
-    this.loadContract()
+   // this.loadContract()
   }
 
+  /*
   loadContract = async (amaId) => {
     const wallet = JSON.parse(sessionStorage.getItem("arweaveWallet"));
     const input = {"function" : "status", "id": amaId}
@@ -35,6 +37,7 @@ class Amas extends Component {
     .then((contract => contract))
     return contract
   }
+  */
 
   loadAmas = async () => {
     const amasObj = await readContract(arweave, amaContractId)
@@ -51,23 +54,30 @@ class Amas extends Component {
     this.setState({showAma: true})
   }
 
+  goBack = () => {
+    console.log("CLICKED BACK")
+    window.location.reload()
+  }
+
+/*
   getStatus = async (aId) => {
     return await this.loadContract(aId)
   }
+*/
 
   renderAmas = () => {
     const amaList = []
     const amas = this.state.amas
     for (let i in amas) { 
       let a = amas[i]
-      let status = this.getStatus(a.id)
-      console.log(status)
+      //let status = this.getStatus(a.id)
+      //console.log(status)
       amaList.push(
-        <Card border="dark" className="mx-auto mb-2" style={{'width': '60rem'}}>
-          <Card.Header as="h5"><Button size="lg" onClick={() => this.showAma(a)} variant="link">{a.guest}</Button> | </Card.Header>
+        <Card border="dark" className="m-4 mx-auto mb-2">
+          <Card.Header as="h5"><Button size="lg" onClick={() => this.showAma(a)} variant="link">{a.guest}</Button></Card.Header>
           <Card.Body>
             <Card.Title className="small">AMA id: <span className="">{a.id}</span></Card.Title>
-            <Button onClick={() => this.showQuestionForm(a)} variant="primary">Ask a question</Button>
+            <Button className="m-4 outline" onClick={() => this.showQuestionForm(a)} variant="outline-primary">Ask a question</Button>
           </Card.Body>
       </Card>
       )
@@ -78,11 +88,13 @@ class Amas extends Component {
   render() {
     const amas = this.renderAmas()
     return (
+      <div>
       <div className="mt-4">
-        <h2 className="m-4" >AMAs</h2> 
+       <h2><Button variant="link" className="text-decoration-none" onClick={() => this.goBack()}>[ Back ]</Button>  AMAs</h2>
         {this.state.showAma ? <Ama ama={this.state.amaToShow}/> : null}
         {!this.state.showQuestionForm && !this.state.showAma ? amas : null }
         {this.state.showQuestionForm ? <AmaQuestionForm question={this.state.questionToAnswer}/> : null }
+      </div>
       </div>
     );
   }

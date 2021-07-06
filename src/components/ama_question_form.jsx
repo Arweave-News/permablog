@@ -1,6 +1,6 @@
 import { Component } from "react";
 import Arweave from "arweave";
-import { Alert, Button } from "react-bootstrap";
+import { Alert, Button  } from "react-bootstrap";
 import { interactWrite } from 'smartweave'
 
 const arweave = Arweave.init({
@@ -73,11 +73,11 @@ class AmaQuestionForm extends Component {
                     </div>         
                     <div>
                         {sessionStorage.getItem("arweaveWallet") ? 
-                            <Button kind="success" className="btn btn-primary mt-3" type="submit">
+                            <Button variant="outline-primary" className=" mb-5" type="submit">
                                 Submit question
                             </Button>
                             :
-                            <Button disabled kind="success" className="btn btn-primary mt-3" type="submit">
+                            <Button disabled variant="outline-primary" className="mt-3" type="submit">
                                 Connect wallet to submit
                             </Button>
                         }

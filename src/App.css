@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  margin: auto;
+  max-width: 70%;
 }
 
 .App-header {
@@ -26,7 +28,6 @@ body {
 
 .post-form {
   margin: auto;
-  max-width: 60%;
 }
 
 .nav-btn {
@@ -79,4 +80,47 @@ Alert {
 
 .App-link {
   color: #61dafb;
+}
+
+/* B9314F danger */
+
+.btn-link {
+  color: #6320EE !important;
+}
+
+.btn {
+  border-radius: 0% !important;
+}
+
+.card {
+  border-radius: 0% !important;
+}
+
+.btn-outline-primary {
+  border-color: #6320EE !important;
+  color: #6320EE !important;
+}
+
+.btn-primary {
+  border-color: #6320EE !important;
+  background-color: #6320EE !important;
+  color: white;
+}
+
+.btn-success {
+  border-color: #AAE935 !important;
+  background-color: #AAE935 !important;
+  color: black !important;
+}
+
+.btn-danger {
+  border-color: #B9314F !important;
+  background-color: #B9314F !important;
+  color: white !important;
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-primary:active, .btn-outline-primary.active {
+  background-color: #6320EE !important;
+  border-color: #6320EE !important;
+  color: white !important;
 }
