@@ -47,7 +47,7 @@ class AmaQuestionForm extends Component {
     console.log(this.props)
       return (
         <div>
-            <h2 className="mt-4 mb-2">Ask a question</h2>
+            <h2 className="mt-4 mb-4">Ask a question</h2>
             <div className="post-form">
                 <form onSubmit={this.onQuestionFormSubmit}>
                     <div>
@@ -77,7 +77,7 @@ class AmaQuestionForm extends Component {
                                 Submit question
                             </Button>
                             :
-                            <Button disabled variant="outline-primary" className="mt-3" type="submit">
+                            <Button disabled variant="outline-primary" className="mb-5" type="submit">
                                 Connect wallet to submit
                             </Button>
                         }
