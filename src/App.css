@@ -124,3 +124,11 @@ Alert {
   border-color: #6320EE !important;
   color: white !important;
 }
+
+.ama-id {
+  font-size: 12px;
+}
+
+code {
+  color: gray !important;
+}

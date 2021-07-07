@@ -13,7 +13,7 @@ const arweave = Arweave.init({
   logging: false,
 });
 
-const amaContractId = 'nyKnauUtvmp93DAHqMJc2b4rycYkGw596IHlc2pO1Sw'
+const amaContractId = 'UjZ6sg7KvoF1XoW7ReB2X3P5uHAbCWYaUIzB7XrjTtM'
 
 class Ama extends Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class Ama extends Component {
 
   onAnswerClick = async (qId) => {
     const wallet = JSON.parse(sessionStorage.getItem("arweaveWallet"));
-    if (!wallet) { return null } else {
+    if (!wallet) { alert('Are you the guest of this AMA? Connect your wallet to answer.') } else {
       await arweave.wallets.jwkToAddress(wallet).then((address) => {
           sessionStorage.setItem("wallet_address", address);
       });
@@ -79,10 +79,11 @@ class Ama extends Component {
         {this.state.showQuestionForm ? <AmaQuestionForm question={this.state.questionToAsk}/> : null }
         {this.state.showAnswerForm ? <AmaAnswerForm ama={this.props.ama} question={this.state.questionToAnswer}/> : null }
         <Card border="dark" className="mx-auto mb-2">
-          <Card.Header as="h5">Questions for {this.props.ama.guest} <span className="small">(AMA id: {this.props.ama.id})</span></Card.Header>
+          <Card.Header as="h5">Questions for {this.props.ama.guest}</Card.Header>
           <Card.Body>
             <Card.Body>{this.getQuestions()}</Card.Body>
             <Button onClick={() => this.showQuestionForm(this.props.ama)} variant="outline-primary">Ask a question</Button>
+            <footer className="ama-id mt-4"><code className="mt-2">AMA id: {this.props.ama.id}</code></footer>
           </Card.Body>
         </Card>
       </div>

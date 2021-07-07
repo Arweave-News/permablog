@@ -11,7 +11,7 @@ const arweave = Arweave.init({
   logging: false,
 });
 
-const amaContractId = 'nyKnauUtvmp93DAHqMJc2b4rycYkGw596IHlc2pO1Sw'
+const amaContractId = 'UjZ6sg7KvoF1XoW7ReB2X3P5uHAbCWYaUIzB7XrjTtM'
 
 class AmaAnswerForm extends Component {
   constructor(props) {
@@ -93,7 +93,7 @@ class AmaAnswerForm extends Component {
           </form>
           {this.state.questionAnswered ? (
             <Alert transition="fade" className="mt-4 show alert alert-success">
-              Answer submitted! {" "}<a href={`https://viewblock.io/arweave/tx/${this.state.lastAnswerTx}}`}>Ensure it went through on viewblock.io</a>
+              Answer submitted! {" "}<a href={`https://viewblock.io/arweave/tx/${this.state.lastAnswerTx}}`}>Check on viewblock.io in a few minutes</a>
             </Alert>
           ) : null}
           {this.state.answerFailed ? (

@@ -11,7 +11,7 @@ const arweave = Arweave.init({
   logging: false,
 });
 
-const amaContractId = 'nyKnauUtvmp93DAHqMJc2b4rycYkGw596IHlc2pO1Sw'
+const amaContractId = 'UjZ6sg7KvoF1XoW7ReB2X3P5uHAbCWYaUIzB7XrjTtM'
 
 class AmaQuestionForm extends Component {
   constructor(props) {
@@ -30,7 +30,7 @@ class AmaQuestionForm extends Component {
     
     if (txId) {
       this.setState({ questionAsked: true, lastAnswerTx: txId })
-      setTimeout(() => { window.location = "/ama" })
+      //setTimeout(() => { window.location = "#ama" })
     } else {
       this.setState({ questionFailed: true })
     }
@@ -73,11 +73,11 @@ class AmaQuestionForm extends Component {
                     </div>         
                     <div>
                         {sessionStorage.getItem("arweaveWallet") ? 
-                            <Button variant="outline-primary" className=" mb-5" type="submit">
+                            <Button variant="outline-primary" className="mt-2 mb-5" type="submit">
                                 Submit question
                             </Button>
                             :
-                            <Button disabled variant="outline-primary" className="mb-5" type="submit">
+                            <Button disabled variant="outline-primary" className="mt-2 mb-5" type="submit">
                                 Connect wallet to submit
                             </Button>
                         }
@@ -85,7 +85,7 @@ class AmaQuestionForm extends Component {
                 </form>
                 {this.state.questionAsked ? (
             <Alert transition="fade" className="mt-4 show alert alert-success">
-              Question submitted! {" "}<a href={`https://viewblock.io/arweave/tx/${this.state.lastAnswerTx}}`}>Ensure it went through on viewblock.io</a>
+              Question submitted! {" "}<a href={`https://viewblock.io/arweave/tx/${this.state.lastAnswerTx}}`}>Check on viewblock.io in a few minutes</a>
             </Alert>
           ) : null}
           {this.state.questionFailed ? (

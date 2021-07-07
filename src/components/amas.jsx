@@ -3,6 +3,7 @@ import Arweave from "arweave";
 import { Button, Card } from "react-bootstrap";
 import { interactRead, readContract } from 'smartweave'
 import AmaQuestionForm from "./ama_question_form";
+import ReactTooltip from "react-tooltip"
 import Ama from "./ama.jsx"
 
 const arweave = Arweave.init({
@@ -13,7 +14,9 @@ const arweave = Arweave.init({
   logging: false,
 });
 
-const amaContractId = 'nyKnauUtvmp93DAHqMJc2b4rycYkGw596IHlc2pO1Sw'
+const amaContractId = 'UjZ6sg7KvoF1XoW7ReB2X3P5uHAbCWYaUIzB7XrjTtM'
+
+// UjZ6sg7KvoF1XoW7ReB2X3P5uHAbCWYaUIzB7XrjTtM
 
 class Amas extends Component {
   constructor(props) {
@@ -70,14 +73,20 @@ class Amas extends Component {
     const amas = this.state.amas
     for (let i in amas) { 
       let a = amas[i]
-      //let status = this.getStatus(a.id)
-      //console.log(status)
+      console.log(a)
       amaList.push(
         <Card border="dark" className="m-4 mx-auto mb-2">
-          <Card.Header as="h5"><Button size="lg" onClick={() => this.showAma(a)} variant="link">{a.guest}</Button></Card.Header>
+          <div className="">
+            <Card.Header>
+              <Button size="lg" onClick={() => this.showAma(a)} variant="link">{a.guest}</Button>
+              <span className="small" data-html="true" data-tip="ARN (Arweave News Token) is rewarded to users<br/>whose questions are answered by AMA guests,<br/>and to guests for answering questions.">[{a.reward} $ARN]</span>
+              <ReactTooltip globalEventOff="hover"/>
+            </Card.Header>
+          </div>
           <Card.Body>
-            <Card.Title className="small">AMA id: <span className="">{a.id}</span></Card.Title>
-            <Button className="m-4 outline" onClick={() => this.showQuestionForm(a)} variant="outline-primary">Ask a question</Button>
+            <p>{a.description}</p>
+            <Button className="mb-3" onClick={() => this.showQuestionForm(a)} variant="outline-primary">Ask a question</Button>
+            <footer className="ama-id"><code className="mt-2">AMA id: {a.id}</code></footer>
           </Card.Body>
       </Card>
       )
@@ -91,9 +100,11 @@ class Amas extends Component {
       <div>
       <div className="mt-4">
        <h2><Button variant="link" className="text-decoration-none" onClick={() => this.goBack()}>[ Back ]</Button>  AMAs</h2>
+       <div className="mb-4">
         {this.state.showAma ? <Ama ama={this.state.amaToShow}/> : null}
         {!this.state.showQuestionForm && !this.state.showAma ? amas : null }
         {this.state.showQuestionForm ? <AmaQuestionForm question={this.state.questionToAnswer}/> : null }
+        </div>
       </div>
       </div>
     );
