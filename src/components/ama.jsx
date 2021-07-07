@@ -39,7 +39,7 @@ class Ama extends Component {
       if (walletAddr === this.props.ama.guestAddress) {
           this.setState({showAnswerForm: true, questionToAnswer: qId})
       } else {
-          alert('You are not the guest of this AMA')
+          swal({title: "Wrong Guest Address", text: "You are not the guest of this AMA", icon: "error"})
       }
     }
   }
