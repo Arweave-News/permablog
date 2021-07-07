@@ -5,7 +5,9 @@ import {
   Modal,
 } from "react-bootstrap";
 
+import swal from 'sweetalert';
 import Arweave from "arweave";
+
 const arweave = Arweave.init();
 
 export default function WalletLoader() {
@@ -35,7 +37,7 @@ export default function WalletLoader() {
       });
       sessionStorage.setItem("arweaveWallet", content);
     } catch (err) {
-      alert("Invalid wallet file", alert);
+      swal({title: "Invalid wallet file", text: "That doesn't look like a valid Arweave wallet - please try again", icon: "error"})
     }
   };
 
