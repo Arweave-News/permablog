@@ -81,6 +81,9 @@ export default function WalletLoader() {
           />
         </Modal.Body>
         <Modal.Footer className="m-2">
+        <Button variant="danger" onClick={handleClose} color="danger">
+            Cancel
+          </Button>
         <Button
               variant="success"
               color="default"
@@ -88,9 +91,7 @@ export default function WalletLoader() {
             >
               Upload
             </Button>
-          <Button onClick={handleClose} color="secondary">
-            Cancel
-          </Button>
+          
         </Modal.Footer>
       </Modal>
       </Container>
