@@ -85,7 +85,7 @@ class AmaQuestionForm extends Component {
                 </form>
                 {this.state.questionAsked ? (
             <Alert transition="fade" className="mt-4 show alert alert-success">
-              Question submitted! {" "}<a href={`https://viewblock.io/arweave/tx/${this.state.lastAnswerTx}}`}>Check on viewblock.io in a few minutes</a>
+              Question submitted! {" "}<a href={`https://viewblock.io/arweave/tx/${this.state.lastAnswerTx}`}>Check on viewblock.io in a few minutes</a>
             </Alert>
           ) : null}
           {this.state.questionFailed ? (

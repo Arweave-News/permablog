@@ -4,7 +4,7 @@ import './App.css';
 import Header from './components/header.jsx'
 import Amas from './components/amas.jsx'
 import About from './components/about.jsx'
-import { HashRouter, Route, BrowserRouter, Switch } from "react-router-dom";
+import { HashRouter, Route, Switch } from "react-router-dom";
 
 function App() {
   return (
