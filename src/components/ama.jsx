@@ -4,6 +4,7 @@ import { Button, Card} from "react-bootstrap";
 import { readContract } from 'smartweave'
 import AmaQuestionForm from "./ama_question_form";
 import AmaAnswerForm from "./ama_answer_form"
+import swal from 'sweetalert'
 
 const arweave = Arweave.init({
   host: "arweave.net",

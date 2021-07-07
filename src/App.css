@@ -107,7 +107,7 @@ Alert {
   color: white;
 }
 
-.btn-success {
+.btn-success, .swal-button--confirm {
   border-color: #AAE935 !important;
   background-color: #AAE935 !important;
   color: black !important;
