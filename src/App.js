@@ -8,6 +8,7 @@ import { HashRouter, Route, BrowserRouter, Switch } from "react-router-dom";
 
 function App() {
   return (
+    <div>
     <HashRouter>
       <div>
         <div className="">
@@ -29,9 +30,12 @@ function App() {
           <Route exact path="/ama" component={() => <Amas/>}>
           </Route>
           </Switch>
+          <p>Built by <a href="https://arweave.news">arweave.news</a> | Source on <a href="https://github.com/xylophonez/permablog">GitHub</a></p>
         </div>
       </div>
     </HashRouter>
+  
+    </div>
   );
 }
 

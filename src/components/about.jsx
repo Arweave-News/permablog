@@ -10,7 +10,7 @@ export default function About() {
                 It currently hosts the list of active arweave.news AMAs, giving the community a way to ask questions to AMA guests, and guests a way to answer - all powered by the blockweave and stored forever!</p>
             </div>
             <div>
-                <Button className="" href="#ama" variant="primary">Go to AMAs</Button>
+                <Button className="mb-4" href="#ama" variant="primary">Go to AMAs</Button>
             </div>
         </div>
     )
