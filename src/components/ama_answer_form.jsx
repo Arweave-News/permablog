@@ -44,7 +44,10 @@ class AmaAnswerForm extends Component {
   };
 
   render() {
-    console.log(this.props)
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
       return (
         <div >
         <h2 className="mt-4 mb-2">Answer a question</h2>
@@ -57,6 +60,7 @@ class AmaAnswerForm extends Component {
                 type="text"
                 id="amaId"
                 name="amaId"
+                disabled={this.props.ama.id}
                 defaultValue={this.props.ama.id}
               ></input>
               <input
@@ -65,6 +69,7 @@ class AmaAnswerForm extends Component {
                 type="text"
                 id="qId"
                 name="qId"
+                disabled={this.props.question}
                 defaultValue={this.props.question}
               ></input>
             </div>

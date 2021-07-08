@@ -32,7 +32,7 @@ class Ama extends Component {
 
   onAnswerClick = async (qId) => {
     const wallet = JSON.parse(sessionStorage.getItem("arweaveWallet"));
-    if (!wallet) { alert('Are you the guest of this AMA? Connect your wallet to answer.') } else {
+    if (!wallet) { swal({title: "Connect Your Wallet to Answer", text: "Are you the guest of this AMA? Login with Arweave to answer.", icon: "error"}) } else {
       await arweave.wallets.jwkToAddress(wallet).then((address) => {
           sessionStorage.setItem("wallet_address", address);
       });
@@ -48,14 +48,24 @@ class Ama extends Component {
   getQuestions = () => {
       let questionsList = []
       let questions = this.props.ama.questions
+      let answers = this.props.ama.answers
       if (questions.length === 0 ) { questionsList.push(<span>No questions yet!</span>) }
       for (let i in questions) {
         let q = questions[i]
+        q.answers = []
+          for (let j in answers) { 
+            console.log(answers[j])
+            if (answers[j].answerTo === q['QID']) { q.answers.push(answers[j].answer) }
+          }
+          console.log(q.answers)
         questionsList.push(
             <div>
-                <span>{q.question}</span>
-                <span className="small text-success">({q['QID']})</span>
-                <span><Button onClick={() => this.onAnswerClick(q['QID'])} variant="link">Answer</Button></span>
+              <Card border="dark" className="m-1 mb-4">
+                <span className="mt-4 m-2" ><span><strong>{q.question} </strong></span><code className="ama-id">({q['QID']})</code></span>
+                <hr/>
+                <span className="answer-text unalign">{q.answers[0]}</span>
+                <span><Button className="mb-4" onClick={() => this.onAnswerClick(q['QID'])} variant="link">Answer</Button></span>
+              </Card>
             </div>
         )
       }
