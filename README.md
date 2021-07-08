@@ -1,8 +1,12 @@
 # permablog
 
-Pre-Alpha prototype for a way to upload, view, manage and blog posts on the permaweb. Sets and gets HTML files via the Arweave protocol.
+## Implemented features
 
-## Current features
+Permablog is a pre-alpha project from arweave.news. It currently hosts the list of active arweave.news AMAs, giving the community a way to ask questions to AMA guests, and guests a way to answer - all powered by the blockweave and stored forever!
+
+## WIP features
+
+Permablog will be a way to upload, view, manage and blog posts on the permaweb. Sets and gets HTML files via the Arweave protocol.
 
 * Create new blog post
 * View other blog posts associated with your walllet
