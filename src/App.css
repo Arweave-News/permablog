@@ -2,6 +2,7 @@
   text-align: center;
   margin: auto;
   max-width: 70%;
+  font-size: 0.8em;
 }
 
 .App-header {
@@ -145,6 +146,12 @@ code {
   text-align: left !important;
 }
 
+.card-body {
+  padding: 0.7em !important;
+}
+
 .answer-text {
-  margin: 1em;
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-bottom: 1em;
 }

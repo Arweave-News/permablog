@@ -64,7 +64,7 @@ class Ama extends Component {
                 <span className="mt-4 m-2" ><span><strong>{q.question} </strong></span><code className="ama-id">({q['QID']})</code></span>
                 <hr/>
                 <span className="answer-text unalign">{q.answers[0]}</span>
-                <span><Button className="mb-4" onClick={() => this.onAnswerClick(q['QID'])} variant="link">Answer</Button></span>
+                { q.question ? null : <span><Button className="mb-4" onClick={() => this.onAnswerClick(q['QID'])} variant="link">Answer</Button></span> }
               </Card>
             </div>
         )
