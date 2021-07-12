@@ -11,7 +11,7 @@ const arweave = Arweave.init({
   logging: false,
 });
 
-const amaContractId = 'UjZ6sg7KvoF1XoW7ReB2X3P5uHAbCWYaUIzB7XrjTtM'
+const amaContractId = 'uBAtZUaLK8rolhSILgfxG_UGU2GcvawhdQjid3K5oE4'
 
 class AmaAnswerForm extends Component {
   constructor(props) {
